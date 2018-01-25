@@ -1,0 +1,98 @@
+module.exports = [
+{
+	name:"zhangsan",
+	age:18,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"lisi",
+	age:19,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"wangwu",
+	age:17,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+}
+,{
+	name:"zhaoliu",
+	age:20,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"wangmazi",
+	age:8,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"huqi",
+	age:9,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"zhanglver",
+	age:13,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"doue",
+	age:20,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"heshen",
+	age:23,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"qianlong",
+	age:25,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"jiaqing",
+	age:28,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"changjinlu",
+	age:31,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+}
+]

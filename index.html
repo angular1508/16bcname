@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		.box {
+			width: 74%;
+			float: left;
+		}
+		.top {
+			padding: 10px 0;
+			background-color: #eff3f6;
+			border-bottom: 1px solid #999;
+		}	
+		.top label {
+			font-size: 12px;
+			margin-left: 35px;
+			margin-right: 5px;
+		}	
+		.top input[type=text] {
+			width: 50px;
+		}	
+		.top button {
+			padding: 3px 20px;
+			background-color: #448fb9;
+			color: #fff;
+		}	
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border: 1px solid #999;
+		}	
+		table th {
+			background-color: #ccc;
+		}	
+		table tr {
+			height: 35px;
+			line-height: 35px;
+		}	
+		table td {
+			border: 1px solid #999;
+			text-align: center;
+		}
+		.fenspan{
+			display:inline-block;
+
+			width:50px;
+			height:50px;
+		}
+	</style>
+	<script src="./js/angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div class="box" ng-controller="myctr">
+		<div class="top">
+
+			<label>真实姓名</label><input type="text" ng-model="username">
+			<label>年龄</label><input type="text" ng-model="age">
+			<button>查询</button>
+
+		</div>
+		<div class="don">
+			<table border="0">
+				<tr>
+					<th>选择</th>
+					<th>登录名</th>
+					<th>年龄</th>
+					<th>编辑</th>
+					<th>删除</th>
+
+				</tr>
+				<tr ng-repeat="item in data|filter:{name:username,age:age}|filter:onleythree">
+					<td><input type="checkbox" ng-model="item.ischeckedflag"></td>
+					<td><input type="text" ng-model="item.name" ng-show="item.iseditflag"><span ng-show="!item.iseditflag">{{item.name}}</span></td>
+					<td><input type="text" ng-model="item.age" ng-show="item.iseditflag"><span ng-show="!item.iseditflag">{{item.age}}</span></td>
+					<td ng-bind="item.editvalue1" ng-click="changeedit(item)">编辑</td>
+					<td ng-click="deletedata($index)">删除</td>
+				</tr>
+			</table>
+			<button ng-click="allchecked()">全选</button>
+			<button ng-click="reverschecked()">反选</button>
+			<button ng-click="deleteall()">删除所有</button>
+			<button class="fenspan" ng-repeat="ite in fenyelist" ng-click="changepage(ite)">{{ite}}</button>
+		</div>
+	</div>
+	<script>
+	    var app = angular.module('app',[]);
+		app.controller('myctr',function($scope,$http,$rootScope){
+		    $scope.data = null;
+			$scope.fenyelist = [];
+			$scope.username = "";
+			//监测对应数据，当其改变时生成新的fenyelist数组
+			$scope.$watch("username",function(a,b){
+				//避免以前的分页对新分页造成干扰
+			    $rootScope.startflag = 0;
+				//根据监测到的当前值对原始数据进行过滤所得到的新数组
+				var arr = [];
+				//原始数据不为null时执行生成新分页数组的逻辑
+				if($scope.data){
+					//遍历原始数据数组根据监测到的过滤条件生成新的数据数组
+				    for(var i = 0;i<$scope.data.length;i++){
+						if($scope.data[i].name.indexOf(a)!=-1){
+						   arr.push($scope.data[i])
+						}
+
+				    }
+					//根据新数组生成新的用于遍历生成分页span的数组
+					$scope.shezhifenye(arr);
+				
+				}
+				
+			});
+			//起始数据索引
+			$rootScope.startflag = 0;
+			//每页显示数据条数
+			$rootScope.pagedatas = 6;
+			//请求数据
+		    //$http({
+			    //url:"http://localhost:3333/getdata",
+				//method:'get'
+			//}).then(function(response){
+			    //console.log(response);
+			    $scope.data = [
+{
+	name:"zhangsan",
+	age:18,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"lisi",
+	age:19,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"wangwu",
+	age:17,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+}
+,{
+	name:"zhaoliu",
+	age:20,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"wangmazi",
+	age:8,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"huqi",
+	age:9,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"zhanglver",
+	age:13,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"doue",
+	age:20,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"heshen",
+	age:23,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"qianlong",
+	age:25,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"jiaqing",
+	age:28,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+},
+{
+	name:"changjinlu",
+	age:31,
+	editvalue1:"编辑",
+	editvalue2:"保存",
+	ischeckedflag:false,
+	iseditflag:false
+}
+];
+				
+				
+			//});
+			//根据数据获取总页数[1,2,3,4]
+			$scope.shezhifenye = function(arr){
+				//调用该函数即清空fenyelist以免以前分页干扰
+			    $scope.fenyelist.length = 0;
+				//遍历数据数组，每当索引+1对每页数据条数区域等于0那么往分页数组中添加一个对应数据
+			    for(var i = 0;i<arr.length;i++){
+				   if((i+1)%$rootScope.pagedatas===0){
+						$scope.fenyelist.push((i+1)/$rootScope.pagedatas);
+					}
+				}
+				//当数据总数与每页显示条数不能整除时多追加一页
+				if(arr.length/$rootScope.pagedatas>1&&arr.length/$rootScope.pagedatas-parseInt(arr.length/$rootScope.pagedatas)!=0){
+				    $scope.fenyelist.push($scope.fenyelist.length+1)
+				}
+			}
+			$scope.shezhifenye($scope.data);
+			//编辑和保存状态切换
+			$scope.changeedit = function(obj){
+				if(obj.iseditflag){
+					obj.iseditflag=false;
+					obj.editvalue1 = '编辑';
+				}else{
+					obj.iseditflag=true;
+					obj.editvalue1 = '保存';
+
+				}
+			};
+			//删除单条数据
+			$scope.deletedata = function(num){
+
+				$scope.data.splice(num,1);
+			}
+			//全选
+			$scope.allchecked = function(){
+
+				$scope.data.forEach(function(item){
+					item.ischeckedflag = true;
+				})
+			}
+			//反选
+			$scope.reverschecked = function(){
+				$scope.data.forEach(function(item){
+					item.ischeckedflag = !item.ischeckedflag;
+				})
+			}
+			//删除所有选中项
+			$scope.deleteall = function(){
+
+				for(var i = 0;i<$scope.data.length;i++){
+                    if($scope.data[i].ischeckedflag){
+						$scope.data.splice(i,1);
+						i--;
+					}
+				}
+			};
+			//切换页吗
+			$scope.changepage = function(num){
+				//该字段用于过滤出当前页的显示数据
+				$rootScope.startflag = num-1;
+			}
+			//根据当前页码过滤数据显示对应的前三条数据
+            $scope.onleythree = function(ele,index){
+				var flag = index >=$rootScope.startflag*$rootScope.pagedatas && index <= $rootScope.startflag * $rootScope.pagedatas+$rootScope.pagedatas-1;
+				console.log(index,flag);
+				return flag;
+				//index===$rootScope.startflag*3 || index===$rootScope.startflag*3+1 || index===$rootScope.startflag*3+2
+			}
+		});
+		
+
+	</script>
+</body>
+</html>
